@@ -1,0 +1,43 @@
+{
+  "name": "CS 2420 · big-o-demo-sorting",
+  "image": "mcr.microsoft.com/devcontainers/cpp:1-ubuntu-24.04",
+  "containerEnv": {
+    "CC": "gcc-13",
+    "CXX": "g++-13"
+  },
+  // Unlike the other two Big O demos, every graph script here needs plotly, and
+  // Ubuntu 24.04's system Python refuses `pip install` (PEP 668). The Python
+  // feature brings its own interpreter and pip, so the chart step just works.
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12",
+      "installTools": false
+    }
+  },
+  "postCreateCommand": "cmake -B build && python3 -m pip install --quiet plotly",
+  // The min/max demo builds a 50M-int vector (200 MB) on purpose, so the array
+  // cannot sit in cache. Give the container room for it.
+  "hostRequirements": {
+    "memory": "4gb"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "ms-python.python",
+        "github.copilot",
+        "github.copilot-chat"
+      ],
+      "settings": {
+        "cmake.configureOnOpen": true,
+        "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
+        "C_Cpp.default.compilerPath": "/usr/bin/g++-13",
+        "C_Cpp.default.cppStandard": "c++23",
+        "C_Cpp.default.includePath": [
+          "${workspaceFolder}/src"
+        ]
+      }
+    }
+  }
+}

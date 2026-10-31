@@ -22,6 +22,27 @@ cmake --build build
 build produces numbers that mean nothing, so do not override it unless you are
 debugging.
 
+### In the Dev Container
+
+`.devcontainer/` matches the other two Big O demos -- the same
+`devcontainers/cpp:1-ubuntu-24.04` image and g++ 13 -- with two additions this
+folder needs. All three graph scripts here import **plotly**, and Ubuntu 24.04's
+system Python refuses `pip install` (PEP 668), so the container adds the Python
+feature and installs plotly on create. It also asks the host for 4 GB, because
+the min/max demo builds a 200 MB vector on purpose.
+
+Open the folder in VS Code and **Reopen in Container**; `cmake -B build` has
+already run by the time the window opens. Or from a terminal:
+
+```bash
+devcontainer up --workspace-folder .
+devcontainer exec --workspace-folder . cmake --build build
+```
+
+The numbers in this file came from that image. Expect your own to differ by a
+large factor on a different host -- the ordering of the variants is the result,
+not the microseconds.
+
 ## Space Complexity Notes
 
 | Algorithm      | Time (avg) | Space   |
