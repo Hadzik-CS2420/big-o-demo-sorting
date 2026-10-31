@@ -18,6 +18,37 @@ cmake --build build
 ./build/big-o-demo-sorting
 ```
 
+### What `-S` and `-B` mean
+
+Those two flags name the two directories CMake works with, and most students
+meet them here first:
+
+- **`-S`** is the **source** directory -- the folder holding `CMakeLists.txt`.
+  `-S .` says "it is right here, where I am standing."
+- **`-B`** is the **build** directory -- where CMake writes everything it
+  generates: makefiles, object files, the executables. It does not have to
+  exist yet; CMake creates it.
+
+Keeping them separate is the point. Nothing CMake generates lands in the folder
+your source lives in, so `git status` stays readable and `rm -rf build` is a
+complete reset with nothing of yours in the blast radius. That is what
+"out-of-source build" means, and it is why `build/` is in `.gitignore`.
+
+`-S .` is **optional**: since CMake 3.13 a bare `cmake -B build` assumes the
+source is the current directory, which is why the other two Big O demos write
+it that way. It is spelled out here so you can see the pair. Where it stops
+being optional is when the two directories have nothing to do with where you
+are standing:
+
+```bash
+cmake -S ~/repos/big-o-demo-sorting -B /tmp/bods-build
+```
+
+If you have seen the older recipe `mkdir build && cd build && cmake ..`, that
+`..` was the source directory given positionally -- you had to `cd` into the
+build folder first for it to make sense. `-S` and `-B` replaced that, so you
+configure from wherever you are.
+
 `CMakeLists.txt` defaults `CMAKE_BUILD_TYPE` to `Release`. Timing an unoptimized
 build produces numbers that mean nothing, so do not override it unless you are
 debugging.
