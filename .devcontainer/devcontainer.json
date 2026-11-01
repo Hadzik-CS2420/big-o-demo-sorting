@@ -1,4 +1,8 @@
 {
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": { "label": "HTML preview (Live Preview)", "onAutoForward": "silent" }
+  },
   "name": "CS 2420 · big-o-demo-sorting",
   "image": "mcr.microsoft.com/devcontainers/cpp:1-ubuntu-24.04",
   "containerEnv": {
@@ -27,9 +31,12 @@
         "ms-vscode.cmake-tools",
         "ms-python.python",
         "github.copilot",
-        "github.copilot-chat"
+        "github.copilot-chat",
+        "ms-vscode.live-server"
       ],
       "settings": {
+        "livePreview.openPreviewTarget": "Embedded Preview",
+        "livePreview.serverPort": 3000,
         "cmake.configureOnOpen": true,
         "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
         "C_Cpp.default.compilerPath": "/usr/bin/g++-13",
